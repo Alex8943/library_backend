@@ -1,5 +1,5 @@
 import express from 'express';
-import {testDBConnection} from './src/db_services/mysql_conn_setup';
+import {testDBConnection} from './db_services/mysql_conn_setup';
 const app = express();
 
 
