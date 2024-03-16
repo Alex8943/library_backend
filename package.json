@@ -2,7 +2,7 @@
   "name": "test",
   "version": "1.0.0",
   "description": "",
-  "main": "app.ts",
+  "main": "app.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon --exec ts-node-dev app.ts",
