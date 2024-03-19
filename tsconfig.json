@@ -5,9 +5,11 @@
     "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "sourceMap": true  // Optional: Generate source maps for debugging
+    "sourceMap": true,  // Optional: Generate source maps for debugging
+    "moduleResolution": "node",
   },
   "include": [
     "src/**/*.ts"
