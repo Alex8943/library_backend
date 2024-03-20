@@ -1,10 +1,15 @@
 import express from 'express';
 import {testDBConnection} from './db_services/mysql_conn_setup';
 import logger from './other_services/winstonLogger';
+import bookRouter from './routes/bookRouter'
 const app = express();
 
 //Mysql connection test
-testDBConnection(); 
+//testDBConnection(); 
+
+//Testing my routes
+app.use(bookRouter)
+
 
 
 //Do this when the server ends 

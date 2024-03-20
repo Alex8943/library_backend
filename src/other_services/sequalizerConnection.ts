@@ -1,4 +1,4 @@
-/* import { Sequelize } from "sequelize";
+import { Sequelize } from "sequelize";
 import logger from "./winstonLogger";
 import { config } from '../../config';
 
@@ -21,4 +21,4 @@ export const sequelizeSync = async () => { await sequelize.sync()
     .catch((error:any) => logger.error('Sequelize sync failed', error));
 }
 
-export default sequelize; */
+export default sequelize; 
