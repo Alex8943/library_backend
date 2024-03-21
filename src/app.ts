@@ -2,6 +2,11 @@ import express from 'express';
 import {testDBConnection} from './db_services/mysql_conn_setup';
 import logger from './other_services/winstonLogger';
 import bookRouter from './routes/bookRouter'
+import bookAuthor from './routes/bookAuthor'
+import tagRouter from './routes/tagRouter'
+import authorRouter from './routes/authorRouter'
+import userTabRouter from './routes/userTabRouter'
+
 const app = express();
 
 //Mysql connection test
@@ -9,7 +14,10 @@ const app = express();
 
 //Testing my routes
 app.use(bookRouter)
-
+app.use(bookAuthor)
+app.use(tagRouter)
+app.use(authorRouter)
+app.use(userTabRouter)
 
 
 //Do this when the server ends 
