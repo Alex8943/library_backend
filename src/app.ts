@@ -1,5 +1,6 @@
 import express from 'express';
 import {testDBConnection} from './db_services/mysql_conn_setup';
+import job from './other_services/cronjob';
 import logger from './other_services/winstonLogger';
 import bookRouter from './routes/bookRouter'
 import bookAuthor from './routes/bookAuthor'
@@ -12,17 +13,20 @@ const app = express();
 //Mysql connection test
 //testDBConnection(); 
 
-//Testing my routes
+//cronjob test
+//job.start();
+
+
 app.use(bookRouter)
-app.use(bookAuthor)
-app.use(tagRouter)
-app.use(authorRouter)
-app.use(userTabRouter)
+app.use(bookAuthor) //Error: Delete author does not work
+app.use(tagRouter) // Error: Cannot add tag to book
+app.use(authorRouter) // Error with deleting a favorited connection
+app.use(userTabRouter) //jwt token gives error
 //app.use(userRouter)
 
 
 
-//Do this when the server ends 
+
 process.on('SIGINT', (code) => {
     logger.end(); 
     console.log('See ya later silly');
