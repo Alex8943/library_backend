@@ -5,8 +5,14 @@ import logger from '../other_services/winstonLogger';
 const router = express.Router();
 router.use(express.json());
 
+const myCors = (req : any, res : any, next: any) =>{
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    next();
+}
+
+
 // Get all tags
-router.get("/tags", async (req, res) => {
+router.get("/tags", myCors, async (req, res) => {
     try {
         const result: any = await getAllTags();
         res.status(200).send(result);
@@ -29,7 +35,7 @@ export async function getAllTags() {
 }
 
 // create tag
-router.post("/tag", async (req, res) => {
+router.post("/tag", myCors, async (req, res) => {
     try {
         const result: any = await createTag(req.body);
         res.status(200).send(result);
@@ -56,7 +62,7 @@ export async function createTag(values: any) {
 
 //Cannot add or update a child row: a foreign key constraint fails (`bookstore`.`tag_books`, CONSTRAINT `tag_books_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`))
 //TODO: Fix this error
-router.post("/bookTag", async (req, res) => {
+router.post("/bookTag", myCors, async (req, res) => {
     try {
         const result: any = await addTagToBook(req.body);
         res.status(200).send(result);

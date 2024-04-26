@@ -3,27 +3,28 @@ import {testDBConnection} from './db_services/mysql_conn_setup';
 import job from './other_services/cronjob';
 import logger from './other_services/winstonLogger';
 import bookRouter from './routes/bookRouter'
-import bookAuthor from './routes/bookAuthor'
-import tagRouter from './routes/tagRouter'
 import authorRouter from './routes/authorRouter'
+import tagRouter from './routes/tagRouter'
+import authRouter from './routes/authRouter'
 import userTabRouter from './routes/userTabRouter'
+import userRouter from './routes/userRouter'
+import cors from 'cors';
 
 const app = express();
+app.use(cors());
 
-//Mysql connection test
 //testDBConnection(); 
 
 //cronjob test
 //job.start();
 
 
-app.use(bookRouter)
-app.use(bookAuthor) //Error: Delete author does not work
+app.use(authorRouter) //Error: Delete author does not work, invalid status code 1
 app.use(tagRouter) // Error: Cannot add tag to book
-app.use(authorRouter) // Error with deleting a favorited connection
-app.use(userTabRouter) //jwt token gives error
-//app.use(userRouter)
-
+app.use(authRouter) 
+app.use(bookRouter)
+app.use(userTabRouter) 
+app.use(userRouter)
 
 
 

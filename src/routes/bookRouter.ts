@@ -10,10 +10,20 @@ const router = express.Router();
 router.use(express.json());
 
 
+const myCors = (req : any, res : any, next: any) =>{
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    next();
+}
+
+
 // ---------------------- Get all books ----------------------
-router.get("/books", async (req, res) => {
+router.get("/books", myCors, async (req, res) => {
     try {
         const result = await getAllBooks();
+        //Enhver browser kan tilgå denne endpoint.
+        //res.setHeader("Access-Control-Allow-Origin", "*");
+
+
         res.status(200).send(result);
     } catch (error) {
         logger.error("Error getting all books: [getAllbooks, 1]", error);
@@ -52,7 +62,7 @@ export async function getAllBooks() {
 }
 
 // --------------------- Get range of books ---------------------
-router.get("/books/:range", async (req, res) => {
+router.get("/books/:range", myCors, async (req, res) => {
     
     try {
         const finishRange = Number(req.params.range);
@@ -83,7 +93,7 @@ export async function getBooksUpToFinishRange(finishRange: number) {
 
 
 // --------------------- Create book ---------------------
-router.post("/book",  async (req, res) => {
+router.post("/book", myCors, async (req, res) => {
     try{
         const result = await createBook(req.body);
         res.status(200).json(result);

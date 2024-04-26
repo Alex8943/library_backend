@@ -8,7 +8,12 @@ env.config();
 const router = express.Router();
 router.use(express.json());
 
-router.post("/user/:id/bookmarks", async (req, res) => {
+const myCors = (req : any, res : any, next: any) =>{
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    next();
+}
+
+router.post("/user/:id/bookmarks", myCors, async (req, res) => {
     try {
         console.log("Req for bookmarks", req.body)
         const userdata = jwt.verify(req.body.authToken, "secret") as JwtPayload;
@@ -44,7 +49,7 @@ async function getBookmarks(user_id: number) {
     }
 }
 
-router.post("/user/:id/borrowed", async (req, res) => {
+router.post("/user/:id/borrowed", myCors, async (req, res) => {
     try {
         const userdata = jwt.verify(req.body.authToken, "secret") as JwtPayload;
         if(userdata.user.user_id != parseInt(req.params.id)) {
@@ -76,7 +81,7 @@ async function getBorrowed(user_id: number) {
     }
 }
 
-router.post("/user/:id/hasborrowed", async (req, res) => {
+router.post("/user/:id/hasborrowed", myCors, async (req, res) => {
     try {
         const userdata = jwt.verify(req.body.authToken, "secret") as JwtPayload;
         if(userdata.user.user_id != parseInt(req.params.id)) {
@@ -108,7 +113,7 @@ async function getHasBorrowed(user_id: number) {
     }
 }
 
-router.post("/user/:id/favoritedAuthors", async (req, res) => {
+router.post("/user/:id/favoritedAuthors", myCors, async (req, res) => {
     try {
         const userdata = jwt.verify(req.body.authToken, "secret") as JwtPayload;
         if(userdata.user.user_id != parseInt(req.params.id)) {
@@ -139,7 +144,7 @@ async function getFavoritedAuthors(user_id: number) {
     }
 }
 
-router.post("/user/:id/reviews", async (req, res) => {
+router.post("/user/:id/reviews", myCors, async (req, res) => {
     try {
         const userdata = jwt.verify(req.body.authToken, "secret") as JwtPayload;
         if (userdata.user.user_id != parseInt(req.params.id)) {

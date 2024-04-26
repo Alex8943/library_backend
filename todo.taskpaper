@@ -1,0 +1,6 @@
+- Error handle routes
+- Error handle cronjob (mysql backup) find out what the difference is between cronjob and backupScript is!!
+- Search for if github actions is important
+- Search for what babelrc is!! 
+- Search for what dist is! 
+- Search for what Seeders is!
