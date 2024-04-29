@@ -36,4 +36,4 @@ export const prodConfig = {
         APP_PORT: process.env.PROD_PORT,
 };
 
-export const config = (process.env.NODE_ENV == "development " ? devConfig : prodConfig);
+export const config = (process.env.NODE_ENV == "production " ? devConfig : prodConfig);
