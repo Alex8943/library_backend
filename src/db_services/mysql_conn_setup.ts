@@ -18,7 +18,7 @@ export async function testDBConnection() {
     const connection = await pool.getConnection();
     try {
         await connection.ping();
-        console.log(`Connected to mysql database on PORT: ${process.env.MYSQL_PROD_DB_PORT}`);
+        console.log(`Connected to mysql database on PORT: ${process.env.MYSQL_PROD_DB_PORT}`)
     }
     catch (err) {
         console.log("Could not connect to mysql database");
