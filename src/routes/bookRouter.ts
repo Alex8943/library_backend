@@ -114,8 +114,7 @@ export async function createBook(values: Books) {
             amount: values.amount,
             available_amount: values.available_amount,
             author_id: values.author_id,
-        },
-        );
+        });
         logger.info("created book: ", book.toJSON());
         return book.toJSON();
     }catch(error){

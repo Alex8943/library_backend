@@ -1,0 +1,164 @@
+swagger: "2.0"
+info:
+  title: Author and Book API
+  version: "1.0"
+paths:
+  /author/{id}:
+    get:
+      summary: Get author by ID
+      tags:
+        - author
+      description: Returns the author details based on the provided ID
+      parameters:
+        - name: id
+          in: path
+          description: ID of the author to retrieve
+          required: true
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/Author"
+  /author:
+    post:
+      summary: Create a new author
+      tags:
+        - author
+      description: Creates a new author with the provided details
+      parameters:
+        - name: body
+          in: body
+          description: Author object that needs to be added
+          required: true
+          schema:
+            $ref: "#/definitions/NewAuthor"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/Author"
+  /author/{id}/books:
+    get:
+      summary: Get all books by author ID
+      tags:
+        - author
+      description: Returns all books written by the author with the provided ID
+      parameters:
+        - name: id
+          in: path
+          description: ID of the author
+          required: true
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Book"
+  /user/{userid}/author/{authorid}:
+    get:
+      summary: Get favorited author
+      tags:
+        - author
+      description: Returns the favorited author based on user ID and author ID
+      parameters:
+        - name: userid
+          in: path
+          description: ID of the user
+          required: true
+          type: string
+        - name: authorid
+          in: path
+          description: ID of the author
+          required: true
+          type: string
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/FavoritedAuthor"
+    post:
+      summary: Create favorited author
+      tags:
+        - author
+      description: Creates a favorited author connection between user and author
+      parameters:
+        - name: userid
+          in: path
+          description: ID of the user
+          required: true
+          type: string
+        - name: authorid
+          in: path
+          description: ID of the author
+          required: true
+          type: string
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/FavoritedAuthor"
+    delete:
+      summary: Delete favorited author
+      tags:
+        - author
+      description: Deletes the favorited author connection between user and author
+      parameters:
+        - name: userid
+          in: path
+          description: ID of the user
+          required: true
+          type: string
+        - name: authorid
+          in: path
+          description: ID of the author
+          required: true
+          type: string
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            type: string
+definitions:
+  Author:
+    type: object
+    properties:
+      id:
+        type: integer
+      username:
+        type: string
+      total_books:
+        type: integer
+    required:
+      - id
+      - username
+  NewAuthor:
+    type: object
+    properties:
+      username:
+        type: string
+      total_books:
+        type: integer
+    required:
+      - username
+  Book:
+    type: object
+    properties:
+      id:
+        type: integer
+        title: string
+        picture: string
+        summary: string
+        pages: integer
+        amount: integer
+        available_amount: integer
+    required:
+      - id
+  FavoritedAuthor:
+    type: object
+    properties:
+      // Define properties of FavoritedAuthor here

@@ -1,0 +1,102 @@
+swagger: "2.0"
+info:
+  title: Bookstore API
+  version: "1.0"
+paths:
+  /books:
+    get:
+      summary: Retrieve all books
+      tags:
+        - books
+      description: Returns a list of all books with their details
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Book"
+  /books/{range}:
+    get:
+      summary: Retrieve books up to a certain range
+      tags:
+        - books
+      description: Returns a list of books up to the specified range
+      parameters:
+        - name: range
+          in: path
+          description: The number of books to retrieve
+          required: true
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Book"
+  /book:
+    post:
+      summary: Create a new book
+      tags:
+        - books
+      description: Creates a new book with the provided details
+      parameters:
+        - name: body
+          in: body
+          description: Book object that needs to be added
+          required: true
+          schema:
+            $ref: "#/definitions/NewBook"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/Book"
+
+definitions:
+  Book:
+    type: object
+    properties:
+      id:
+        type: integer
+      title:
+        type: string
+      picture:
+        type: string
+      summary:
+        type: string
+      pages:
+        type: integer
+      amount:
+        type: integer
+      available_amount:
+        type: integer
+      author_id:
+        type: integer
+    required:
+      - title
+      - author_id
+  NewBook:
+    type: object
+    properties:
+      id:
+        type: integer
+      title:
+        type: string
+      picture:
+        type: string
+      summary:
+        type: string
+      pages:
+        type: integer
+      amount:
+        type: integer
+      available_amount:
+        type: integer
+      author_id:
+        type: integer
+    required:
+      - title
+      - author_id

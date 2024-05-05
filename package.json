@@ -21,6 +21,8 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.9.2",
     "sequelize": "^6.37.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
     "typescript": "^4.5.5",
     "winston": "^3.12.0"
   },
@@ -28,6 +30,8 @@
     "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
     "@types/jsonwebtoken": "^9.0.6",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.6",
     "@types/winston": "^2.4.4",
     "nodemon": "^2.0.15",
     "ts-node": "^10.4.0",

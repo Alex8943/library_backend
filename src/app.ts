@@ -9,6 +9,8 @@ import authRouter from './routes/authRouter'
 import userTabRouter from './routes/userTabRouter'
 import userRouter from './routes/userRouter'
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import swaggerJsdoc from "swagger-jsdoc";
 
 const app = express();
 app.use(cors()); 
@@ -19,7 +21,26 @@ app.use(cors());
 //job.start();
 
 
-app.use(authorRouter) //Error: Delete author does not work, invalid status code 1
+const options = {
+    definition: {
+        openapi: "3.0.0",
+        info: {
+            title: "Library API documentation",
+            version: "1.0.0",
+            description: "code documentation for our library project",
+        },
+    },
+    apis: [
+        './src/routes/swagger_openAPI_routes/author_router.yaml', 
+        './src/routes/swagger_openAPI_routes/book_router.yaml', //Create book does not work
+        './src/routes/swagger_openAPI_routes/tag_router.yaml'
+    ],
+};
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(options)));
+
+
+app.use(authorRouter) //Error: Delete favorite author does not work, invalid status code 1. Create author does not work
 app.use(tagRouter) // Error: Cannot add tag to book
 app.use(authRouter) 
 app.use(bookRouter)

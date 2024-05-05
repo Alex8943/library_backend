@@ -1,0 +1,85 @@
+swagger: "2.0"
+info:
+  title: Tag API
+  version: "1.0"
+paths:
+  /tags:
+    get:
+      summary: Get all tags
+      tags:
+        - tags
+      description: Returns a list of all tags
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Tag"
+    post:
+      summary: Create a new tag
+      tags:
+        - tags
+      description: Creates a new tag with the provided details
+      parameters:
+        - name: body
+          in: body
+          description: Tag object that needs to be added
+          required: true
+          schema:
+            $ref: "#/definitions/NewTag"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/Tag"
+  /bookTag:
+    post:
+      summary: Add tag to book
+      tags:
+        - tags
+      description: Adds a tag to a book
+      parameters:
+        - name: body
+          in: body
+          description: Object containing book ID and tag ID
+          required: true
+          schema:
+            $ref: "#/definitions/BookTag"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/BookTag"
+definitions:
+  Tag:
+    type: object
+    properties:
+      id:
+        type: integer
+      title:
+        type: string
+      tag_description:
+        type: string
+    required:
+      - id
+      - title
+  NewTag:
+    type: object
+    properties:
+      title:
+        type: string
+      tag_description:
+        type: string
+    required:
+      - title
+  BookTag:
+    type: object
+    properties:
+      book_id:
+        type: integer
+      tag_id:
+        type: integer
+    required:
+      - book_id
+      - tag_id
