@@ -1,0 +1,176 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: User Management API
+  description: Documentation for user management endpoints
+paths:
+  /user/{id}/bookmarks:
+    post:
+      summary: Get user bookmarks
+      tags:
+        - userTab
+      description: Retrieve bookmarks of a user by their ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: User ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                authToken:
+                  type: string
+          example:
+            authToken: "JWT_TOKEN_HERE"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object  # Adjust schema according to bookmarks data structure
+  /user/{id}/borrowed:
+    post:
+      summary: Get user borrowed books
+      tags:
+        - userTab
+      description: Retrieve books borrowed by a user by their ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: User ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                authToken:
+                  type: string
+          example:
+            authToken: "JWT_TOKEN_HERE"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object  # Adjust schema according to borrowed books data structure
+  /user/{id}/hasborrowed:
+    post:
+      summary: Get user previously borrowed books
+      tags:
+        - userTab
+      description: Retrieve previously borrowed books by a user by their ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: User ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                authToken:
+                  type: string
+          example:
+            authToken: "JWT_TOKEN_HERE"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object  # Adjust schema according to previously borrowed books data structure
+  /user/{id}/favoritedAuthors:
+    post:
+      summary: Get user favorited authors
+      tags:
+        - userTab
+      description: Retrieve favorited authors by a user by their ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: User ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                authToken:
+                  type: string
+          example:
+            authToken: "JWT_TOKEN_HERE"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object  # Adjust schema according to favorited authors data structure
+  /user/{id}/reviews:
+    post:
+      summary: Get user reviews
+      tags:
+        - userTab
+      description: Retrieve reviews by a user by their ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: User ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                authToken:
+                  type: string
+          example:
+            authToken: "JWT_TOKEN_HERE"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object  # Adjust schema according to reviews data structure

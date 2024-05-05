@@ -166,12 +166,14 @@ export async function createFavoritedAuthor(id: string, authorid: string) {
 router.delete("/user/:userid/author/:authorid", async (req, res) => {
     try {
         const result = await deleteFavoritedAuthor(req.params.userid, req.params.authorid);
-        res.status(200).send(result);
+        res.sendStatus(200); 
+        res.send(result);
     } catch (error) {
         logger.error("Error with deleting a favorited ", error);
-        res.status(500).send(error);
+        res.sendStatus(500);
     }
 });
+
 
 export async function deleteFavoritedAuthor(id: string, authorid: string) {
     try{
