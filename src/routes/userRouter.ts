@@ -10,11 +10,9 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 const router = express.Router();
 router.use(express.json());
 
-const myCors = (req : any, res : any, next: any) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-}
+
 //TODO fix any to user type
-router.get("/user/:id", myCors, async (req: Request<{ id: number}>, res) => {
+router.get("/user/:id", async (req: Request<{ id: number}>, res) => {
     try {
         const result: any = await getUserById(req.params.id);
         if (result.length == 0) {
@@ -41,7 +39,7 @@ export async function getUserById(id: number) {
 }
 
 // TODO fix any to user type
-router.post("/user", myCors, async (req, res) => {
+router.post("/user", async (req, res) => {
     try{
         const result = await createUser(req.body);
         res.status(200).json(result);
@@ -65,7 +63,7 @@ export async function createUser(values: any) {
 }
 
 // update user data
-router.post("/user/:id/update", myCors, async (req, res) => {
+router.post("/user/:id/update", async (req, res) => {
     try{
         const userdata = jwt.verify(req.body.authToken, "secret") as JwtPayload;
         let paramsId: number = parseInt(req.params.id);
@@ -117,7 +115,7 @@ export async function updateUser(id: number, values: any, tokenPassword: any) {
 }
 
 // delete user
-router.post("/deleteUser/:id", myCors, async (req, res) => {
+router.post("/deleteUser/:id", async (req, res) => {
     try{
         const userdata = jwt.verify(req.body.authToken, "secret") as JwtPayload;
         let paramsId: number = parseInt(req.params.id);
@@ -154,7 +152,8 @@ export async function deleteUser(id: number) {
 }
 
 // Interactions
-router.post("/user/:id/borrow/:bookId", myCors, async (req, res) => {
+router.post("/user/:id/borrow/:bookId", async (req, res) => {
+    //return res.json("ID: " + req.params.id);
     try{
         const result = await bookInteraction(req.params.id, req.params.bookId, "Borrowed");
         res.status(200).json(result);
@@ -172,7 +171,7 @@ router.post("/user/:id/bookmarked/:bookId", async (req, res) => {
         res.status(500).json("Internal server error");
     }
 });
-router.post("/user/:id/hasborrowed/:bookId", myCors, async (req, res) => {
+router.post("/user/:id/hasborrowed/:bookId", async (req, res) => {
     try{
         const result = await bookInteraction(req.params.id, req.params.bookId, "Has_Borrowed");
         res.status(200).json(result);
@@ -197,7 +196,7 @@ export async function bookInteraction(id: string, bookId: string, interaction_ty
     }
 }
 
-router.get("/user/:id/bookmarked/:bookId", myCors, async (req, res) => {
+router.get("/user/:id/bookmarked/:bookId", async (req, res) => {
     try{
         const result = await getBookInteraction(req.params.id, req.params.bookId, "Bookmarked");
         res.status(200).json(result);
@@ -221,7 +220,7 @@ async function getBookInteraction(id: string, bookId: string, interaction_type: 
         logger.error("Error in getting a bookInteractions: [getBookmarkBook, 2]", error);
     }
 }
-router.get("/user/:id/bookmarked/", myCors, async (req, res) => {
+router.get("/user/:id/bookmarked/", async (req, res) => {
     try{
         const result = await getBookInteractionByUser(req.params.id, "Borrowed");
         res.status(200).json(result);
@@ -251,7 +250,7 @@ async function getBookInteractionByUser(id: string, interaction_type: string) {
     }
 }
 
-router.delete("/user/:id/bookmarked/:bookId", myCors, async (req, res) => {
+router.delete("/user/:id/bookmarked/:bookId", async (req, res) => {
     try{
         const result = await deleteBookInteraction(req.params.id, req.params.bookId, "Bookmarked");
         res.status(200).json(result);
@@ -276,7 +275,7 @@ async function deleteBookInteraction(id: string, bookId: string, interaction_typ
 }
 
 // Return book
-router.put("/user/:id/return/:bookId", myCors, async (req, res) => {
+router.put("/user/:id/return/:bookId", async (req, res) => {
     try{
         const result = await returnBook(req.params.id, req.params.bookId);
         res.status(200).json(result);
@@ -306,7 +305,7 @@ export async function returnBook(id: string, bookId: string) {
     }
 }
 // Create review
-router.post("/user/:id/review/:bookId/:stars", myCors, async (req, res) => {
+router.post("/user/:id/review/:bookId/:stars", async (req, res) => {
     try{
         const result = await createReview(req.params.id, req.params.bookId, req.params.stars);
         res.status(200).json(result);
