@@ -18,9 +18,9 @@ app.use(cors());
 //testDBConnection(); 
 
 //cronjob test
-//job.start();
+job.start();
 
-
+/*
 const options = {
     definition: {
         openapi: "3.0.0",
@@ -40,7 +40,7 @@ const options = {
     ],
 };
 
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(options)));
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(options)));*/
 
 
 app.use(authorRouter) //Error: Delete favorite author does not work, invalid status code 1.
