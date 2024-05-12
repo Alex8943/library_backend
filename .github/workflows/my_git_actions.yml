@@ -6,5 +6,18 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Say Hello
-      run: echo "Hello, world!"
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Install dependencies
+      run: npm install
+      
+    - name: Start server
+      run: npm run dev
+      background: true
+      
+    - name: Wait for server to start
+      run: sleep 10
+      
+    - name: Check if server is running
+      run: curl -IsS http://localhost:3000/ | head -n 1 | grep "200 OK"
