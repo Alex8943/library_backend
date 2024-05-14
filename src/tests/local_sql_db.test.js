@@ -17,6 +17,8 @@ describe('my local mysql connection test', () => {
     };
 
     connection = await mysql.createConnection(mysqlConfig);
+
+    
   });
 
   afterAll(async () => {
