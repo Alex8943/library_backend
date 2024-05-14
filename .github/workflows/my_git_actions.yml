@@ -11,7 +11,7 @@ jobs:
     
     strategy:
       matrix:
-        node-version: [14.x]  # Use a valid Node.js version here
+        node-version: [14.x]
 
     steps:
     - name: Checkout repository
@@ -22,6 +22,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     
+    - name: Display Node.js version
+      run: node -v
+    
+    - name: Display npm version
+      run: npm -v
+
     - name: Install dependencies
       run: npm install
 
