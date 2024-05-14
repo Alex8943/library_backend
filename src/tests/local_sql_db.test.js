@@ -5,31 +5,37 @@ dotenv.config();
 
 describe('my local mysql connection test', () => {
 
-    let connection; 
+  let connection;
 
-    beforeAll(async () => {
-        const mysqlConfig = {
-            host: process.env.MYSQL_DEV_DB_HOST, 
-            user: process.env.MYSQL_DEV_DB_USER,
-            password: process.env.MYSQL_DEV_DB_PASSWORD,
-            database: process.env.MYSQL_DEV_DB_NAME, 
-            port: process.env.MYSQL_DEV_DB_PORT
-        }; 
+  beforeAll(async () => {
+    const mysqlConfig = {
+      host: process.env.MYSQL_DEV_DB_HOST,
+      user: process.env.MYSQL_DEV_DB_USER,
+      password: process.env.MYSQL_DEV_DB_PASSWORD,
+      database: process.env.MYSQL_DEV_DB_NAME,
+      port: process.env.MYSQL_DEV_DB_PORT
+    };
 
-        connection = await mysql.createConnection(mysqlConfig);
-    })
+    connection = await mysql.createConnection(mysqlConfig);
+  });
 
-    test('should connect to local mysql database', async () => {
-        try {
-            const [rows] = await connection.execute('SELECT DATABASE() AS databaseName');
-            const databaseName = rows[0].databaseName;
+  afterAll(async () => {
+    if (connection && connection.end) {
+      await connection.end();
+    }
+  });
 
-            expect(databaseName === 'kea_library').toBe(true);
-        }
-        catch (err) {
-            console.error(err);
-        }
-    });
+  test('should connect to local mysql database', async () => {
+    try {
+      const [rows] = await connection.execute('SELECT DATABASE() AS databaseName');
+      const databaseName = rows[0].databaseName;
+
+      expect(databaseName).toBe('test_db'); // Adjust to match the test DB name
+    } catch (err) {
+      console.error(err);
+      throw err; // Rethrow to ensure the test fails on error
+    }
+  });
 
     test('should return all books from the database', async () => {
         try {

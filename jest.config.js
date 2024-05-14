@@ -4,8 +4,8 @@ exports.default = {
     transform: {
       '^.+\\.js$': 'babel-jest',
     },
+    coverageReporters: ["lcov", "text"],
     moduleFileExtensions: ['js'],
     collectCoverage: true,
-    collectCoverageFrom: ['src/**/{!(app),}.js'],
-    coverageReporters: ["lcov", "text"],
+    collectCoverageFrom: ['src/**/{!(app),}.js']
 };
