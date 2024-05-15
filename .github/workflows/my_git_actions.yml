@@ -53,7 +53,6 @@ jobs:
         MYSQL_DEV_DB_PASSWORD: ${{ secrets.MYSQL_DEV_DB_PASSWORD}}
         MYSQL_DEV_DB_HOST: ${{ secrets.MYSQL_DEV_DB_HOST }}
         MYSQL_DEV_DB_PORT: ${{ secrets.MYSQL_DEV_DB_PORT }}
-        
       run: npm test
 
     - name: Run tests against production database
@@ -63,5 +62,4 @@ jobs:
         MYSQL_PROD_DB_PASSWORD: ${{ secrets.MYSQL_PROD_DB_PASSWORD }}
         MYSQL_PROD_DB_HOST: ${{ secrets.MYSQL_PROD_DB_HOST }}
         MYSQL_PROD_DB_PORT: ${{ secrets.MYSQL_PROD_DB_PORT }}
-
       run: npm test
