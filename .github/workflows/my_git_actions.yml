@@ -48,4 +48,5 @@ jobs:
         MYSQL_PROD_DB_PASSWORD: ${{ secrets.MYSQL_PROD_DB_PASSWORD }}
         MYSQL_PROD_DB_HOST: ${{ secrets.MYSQL_PROD_DB_HOST }}
         MYSQL_PROD_DB_PORT: ${{ secrets.MYSQL_PROD_DB_PORT }}
+        
       run: npm test
