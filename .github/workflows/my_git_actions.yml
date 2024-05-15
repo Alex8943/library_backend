@@ -43,9 +43,9 @@ jobs:
 
     - name: Run tests against production database
       env:
-        MYSQL_PROD_DB_NAME: ${{ secrets.MYSQL_PROD_DB_NAME }}
-        MYSQL_PROD_DB_USERNAME: ${{ secrets.MYSQL_PROD_DB_USERNAME }}
-        MYSQL_PROD_DB_PASSWORD: ${{ secrets.MYSQL_PROD_DB_PASSWORD }}
-        MYSQL_PROD_DB_HOST: ${{ secrets.MYSQL_PROD_DB_HOST }}
-        MYSQL_PROD_DB_PORT: ${{ secrets.MYSQL_PROD_DB_PORT }}
+        DB_NAME: ${{ secrets.MYSQL_PROD_DB_NAME }}
+        DB_USERNAME: ${{ secrets.MYSQL_PROD_DB_USERNAME }}
+        DB_PASSWORD: ${{ secrets.MYSQL_PROD_DB_PASSWORD }}
+        DB_HOST: ${{ secrets.MYSQL_PROD_DB_HOST }}
+        DB_PORT: ${{ secrets.MYSQL_PROD_DB_PORT }}
       run: npm test
