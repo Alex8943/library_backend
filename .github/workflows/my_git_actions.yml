@@ -48,11 +48,11 @@ jobs:
 
     - name: Run tests
       env:
-        MYSQL_DEV_DB_HOST: 127.0.0.1
+        MYSQL_DEV_DB_HOST: ${{ secrets.MYSQL_DEV_DB_HOST }}
         MYSQL_DEV_DB_USER: ${{ secrets.MYSQL_DEV_DB_USER }}
         MYSQL_DEV_DB_PASSWORD: ${{ secrets.MYSQL_DEV_DB_PASSWORD }}
         MYSQL_DEV_DB_NAME: ${{ secrets.MYSQL_DEV_DB_NAME }}
-        MYSQL_DEV_DB_PORT: 3306
+        MYSQL_DEV_DB_PORT: ${{ secrets.MYSQL_DEV_DB_PORT }}
       run: npm test
 
     - name: Run tests against production database

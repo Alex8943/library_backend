@@ -9,16 +9,16 @@ describe('my local mysql connection test', () => {
 
   beforeAll(async () => {
     const mysqlConfig = {
-      host: process.env.MYSQL_DEV_DB_HOST,
+      host: '127.0.0.1',
       user: process.env.MYSQL_DEV_DB_USER,
       password: process.env.MYSQL_DEV_DB_PASSWORD,
       database: process.env.MYSQL_DEV_DB_NAME,
-      port: process.env.MYSQL_DEV_DB_PORT
+      port: '3306'
     };
 
     connection = await mysql.createConnection(mysqlConfig);
 
-    
+
   });
 
   afterAll(async () => {
