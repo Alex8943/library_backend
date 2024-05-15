@@ -46,7 +46,7 @@ jobs:
         MYSQL_DEV_DB_HOST: localhost  # Use localhost here
         MYSQL_DEV_DB_USER: test_user
         MYSQL_DEV_DB_PASSWORD: test_password
-        MYSQL_DEV_DB_NAME: test_db
+        MYSQL_DEV_DB_NAME: kea_library
         MYSQL_DEV_DB_PORT: 3306
       run: npm test -- --testPathPattern=src/tests/local_sql_db.test.js
 
