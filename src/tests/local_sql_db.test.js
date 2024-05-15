@@ -1,4 +1,4 @@
-import mysql from 'mysql2/promise';
+/*import mysql from 'mysql2/promise';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -69,4 +69,6 @@ describe('my local mysql connection test', () => {
     afterAll(async () => {
         await connection.end();
     })
-})
+})*/ 
+
+
