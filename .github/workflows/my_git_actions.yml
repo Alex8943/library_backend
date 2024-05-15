@@ -43,11 +43,11 @@ jobs:
 
     - name: Run tests against local database
       env:
-        MYSQL_DEV_DB_HOST: 127.0.0.1
-        MYSQL_DEV_DB_USER: root
-        MYSQL_DEV_DB_PASSWORD: ${{ secrets.MYSQL_DEV_DB_PASSWORD }}
-        MYSQL_DEV_DB_NAME: ${{ secrets.MYSQL_DEV_DB_NAME }}
-        MYSQL_DEV_DB_PORT: ${{ secrets.MYSQL_DEV_DB_PORT }}
+        MYSQL_DEV_DB_HOST: localhost  # Use localhost here
+        MYSQL_DEV_DB_USER: test_user
+        MYSQL_DEV_DB_PASSWORD: test_password
+        MYSQL_DEV_DB_NAME: test_db
+        MYSQL_DEV_DB_PORT: 3306
       run: npm test -- --testPathPattern=src/tests/local_sql_db.test.js
 
     - name: Run tests against production database
