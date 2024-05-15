@@ -40,6 +40,14 @@ jobs:
 
     - name: Install dependencies
       run: npm install
+    
+    - name: Run tests against local database
+      env:
+        MYSQL_PROD_DB_NAME: ${{ secrets.MYSQL_DEV_DB_NAME }}
+        MYSQL_PROD_DB_USERNAME: ${{ secrets.MYSQL_DEV_DB_USERNAME }}
+        MYSQL_PROD_DB_PASSWORD: ${{ secrets.MYSQL_DEV_DB_PASSWORD}}
+        MYSQL_PROD_DB_HOST: ${{ secrets.MYSQL_DEV_DB_HOST }}
+        MYSQL_PROD_DB_PORT: ${{ secrets.MYSQL_DEV_DB_PORT }}
 
     - name: Run tests against production database
       env:
@@ -48,5 +56,5 @@ jobs:
         MYSQL_PROD_DB_PASSWORD: ${{ secrets.MYSQL_PROD_DB_PASSWORD }}
         MYSQL_PROD_DB_HOST: ${{ secrets.MYSQL_PROD_DB_HOST }}
         MYSQL_PROD_DB_PORT: ${{ secrets.MYSQL_PROD_DB_PORT }}
-        
+
       run: npm test
