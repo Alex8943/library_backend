@@ -44,7 +44,7 @@ jobs:
     - name: Run tests against production database
       env:
         MYSQL_DEV_DB_NAME: ${{ secrets.MYSQL_DEV_DB_NAME }}
-        MYSQL_DEV_DB_USERNAME: ${{ secrets.MYSQL_DEV_DB_USER }}
+        MYSQL_DEV_DB_USER: ${{ secrets.MYSQL_DEV_DB_USER }}
         MYSQL_DEV_DB_PASSWORD: ${{ secrets.MYSQL_DEV_DB_PASSWORD }}
         MYSQL_DEV_DB_HOST: ${{ secrets.MYSQL_DEV_DB_HOST }}
         MYSQL_DEV_DB_PORT: ${{ secrets.MYSQL_DEV_DB_PORT }}  
