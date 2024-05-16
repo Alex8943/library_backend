@@ -12,7 +12,7 @@ jobs:
       mysql:
         image: mysql:5.7
         ports:
-          - 3306:3306
+          - 3306:3307  # Map container's port 3306 to host's port 3307 to avoid conflicts
         env:
           MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_DEV_DB_PASSWORD }}
           MYSQL_DATABASE: ${{ secrets.MYSQL_DEV_DB_NAME }}
@@ -27,6 +27,7 @@ jobs:
     strategy:
       matrix:
         node-version: [14.x]
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -39,12 +40,26 @@ jobs:
     - name: Install dependencies
       run: npm install
     
+    - name: Wait for MySQL to be ready
+      run: |
+        for i in {1..30}; do
+          if mysqladmin ping -h127.0.0.1 -P3307 --silent; then
+            echo "MySQL is up and running"
+            break
+          fi
+          echo "Waiting for MySQL to be ready..."
+          sleep 2
+        done
 
-    - name: Run tests against production database
+    - name: Debug MySQL service
+      if: failure()
+      run: docker logs $(docker ps -q --filter "ancestor=mysql:5.7")
+
+    - name: Run tests against local database
       env:
         MYSQL_DEV_DB_NAME: ${{ secrets.MYSQL_DEV_DB_NAME }}
         MYSQL_DEV_DB_USER: ${{ secrets.MYSQL_DEV_DB_USER }}
         MYSQL_DEV_DB_PASSWORD: ${{ secrets.MYSQL_DEV_DB_PASSWORD }}
-        MYSQL_DEV_DB_HOST: ${{ secrets.MYSQL_DEV_DB_HOST }}
-        MYSQL_DEV_DB_PORT: ${{ secrets.MYSQL_DEV_DB_PORT }}  
+        MYSQL_DEV_DB_HOST: 127.0.0.1
+        MYSQL_DEV_DB_PORT: 3307
       run: npm test -- local_sql_db.test.js
