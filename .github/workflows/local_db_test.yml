@@ -39,7 +39,7 @@ jobs:
 
     - name: Install dependencies
       run: npm install
-    
+
     - name: Wait for MySQL to be ready
       run: |
         for i in {1..30}; do
@@ -51,9 +51,12 @@ jobs:
           sleep 2
         done
 
-    - name: Debug MySQL service
+    - name: Debug MySQL service if it fails
       if: failure()
-      run: docker logs $(docker ps -q --filter "ancestor=mysql:5.7")
+      run: |
+        MYSQL_CONTAINER_ID=$(docker ps -q --filter "ancestor=mysql:5.7")
+        echo "MySQL container ID: $MYSQL_CONTAINER_ID"
+        docker logs $MYSQL_CONTAINER_ID
 
     - name: Run tests against local database
       env:
