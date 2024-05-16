@@ -5,7 +5,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  test-local:
+  build:
+
     runs-on: ubuntu-latest
 
     services:
@@ -14,17 +15,15 @@ jobs:
         ports:
           - 3306:3306
         env:
-          MYSQL_DB_HOST: ${{ secrets.MYSQL_DEV_DB_HOST }}
-          MYSQL_DB_USER: ${{ secrets.MYSQL_DEV_DB_USER }}
-          MYSQL_DB_PASSWORD: ${{ secrets.MYSQL_DEV_DB_PASSWORD }}
-          MYSQL_DATABASE_NAME: ${{ secrets.MYSQL_DEV_DB_NAME }}
-          MYSQL_DB_PORT: ${{ secrets.MYSQL_DEV_DB_PORT }}
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: test_db
+          MYSQL_USER: test_user
+          MYSQL_PASSWORD: test_password
         options: >-
           --health-cmd="mysqladmin ping --silent"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=3
-
     strategy:
       matrix:
         node-version: [14.x]
@@ -40,7 +39,7 @@ jobs:
 
     - name: Install dependencies
       run: npm install
-
+    
     - name: Set up local database environment variables
       run: |
         echo "MYSQL_DEV_DB_HOST=localhost" >> $GITHUB_ENV
