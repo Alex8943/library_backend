@@ -50,5 +50,5 @@ jobs:
         echo "MYSQL_DEV_DB_PORT=3306" >> $GITHUB_ENV
 
     - name: Run tests against local database
-    #Run only local_sql_db.test.js
+
       run: npm test -- local_sql_db.test.js
