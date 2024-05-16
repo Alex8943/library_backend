@@ -41,20 +41,11 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Run tests against local database
-      env:
-        MYSQL_DEV_DB_HOST: localhost  # Use localhost here
-        MYSQL_DEV_DB_USER: ${{ secrets.MYSQL_DEV_DB_USER }}
-        MYSQL_DEV_DB_PASSWORD: ${{ secrets.MYSQL_PROD_DB_PASSWORD }}
-        MYSQL_DEV_DB_NAME: kea_library
-        MYSQL_DEV_DB_PORT: 3306
-      run: npm test -- --testPathPattern=src/tests/local_sql_db.test.js
-
     - name: Run tests against production database
       env:
-        MYSQL_PROD_DB_NAME: ${{ secrets.MYSQL_PROD_DB_NAME }}
-        MYSQL_PROD_DB_USERNAME: ${{ secrets.MYSQL_PROD_DB_USERNAME }}
-        MYSQL_PROD_DB_PASSWORD: ${{ secrets.MYSQL_PROD_DB_PASSWORD }}
-        MYSQL_PROD_DB_HOST: ${{ secrets.MYSQL_PROD_DB_HOST }}
-        MYSQL_PROD_DB_PORT: ${{ secrets.MYSQL_PROD_DB_PORT }}
-      run: npm test -- --testPathPattern=src/tests/deployed_sql_db.test.js
+        DB_NAME: ${{ secrets.MYSQL_PROD_DB_NAME }}
+        DB_USERNAME: ${{ secrets.MYSQL_PROD_DB_USERNAME }}
+        DB_PASSWORD: ${{ secrets.MYSQL_PROD_DB_PASSWORD }}
+        DB_HOST: ${{ secrets.MYSQL_PROD_DB_HOST }}
+        DB_PORT: ${{ secrets.MYSQL_PROD_DB_PORT }}
+      run: npm test
