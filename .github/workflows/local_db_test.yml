@@ -40,14 +40,12 @@ jobs:
     - name: Install dependencies
       run: npm install
     
-    - name: Set up local database environment variables
-      run: |
-        echo "MYSQL_DEV_DB_HOST=localhost" >> $GITHUB_ENV
-        echo "MYSQL_DEV_DB_USER=root" >> $GITHUB_ENV
-        echo "MYSQL_DEV_DB_PASSWORD=root" >> $GITHUB_ENV
-        echo "MYSQL_DEV_DB_NAME=kea_library" >> $GITHUB_ENV
-        echo "MYSQL_DEV_DB_PORT=3306" >> $GITHUB_ENV
 
-    - name: Run tests against local database
-
+    - name: Run tests against production database
+      env:
+        MYSQL_DEV_DB_NAME: ${{ secrets.MYSQL_DEV_DB_NAME }}
+        MYSQL_DEV_DB_USERNAME: ${{ secrets.MYSQL_DEV_DB_USERNAME }}
+        MYSQL_DEV_DB_PASSWORD: ${{ secrets.MYSQL_DEV_DB_PASSWORD }}
+        MYSQL_DEV_DB_HOST: ${{ secrets.MYSQL_DEV_DB_HOST }}
+        MYSQL_DEV_DB_PORT: ${{ secrets.MYSQL_DEV_DB_PORT }}  
       run: npm test -- local_sql_db.test.js
