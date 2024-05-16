@@ -1,0 +1,54 @@
+name: Local Test
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  test-local:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:5.7
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_DB_HOST: ${{ secrets.MYSQL_DEV_DB_HOST }}
+          MYSQL_DB_USER: ${{ secrets.MYSQL_DEV_DB_USER }}
+          MYSQL_DB_PASSWORD: ${{ secrets.MYSQL_DEV_DB_PASSWORD }}
+          MYSQL_DATABASE_NAME: ${{ secrets.MYSQL_DEV_DB_NAME }}
+          MYSQL_DB_PORT: ${{ secrets.MYSQL_DEV_DB_PORT }}
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Set up local database environment variables
+      run: |
+        echo "MYSQL_DEV_DB_HOST=localhost" >> $GITHUB_ENV
+        echo "MYSQL_DEV_DB_USER=root" >> $GITHUB_ENV
+        echo "MYSQL_DEV_DB_PASSWORD=root" >> $GITHUB_ENV
+        echo "MYSQL_DEV_DB_NAME=kea_library" >> $GITHUB_ENV
+        echo "MYSQL_DEV_DB_PORT=3306" >> $GITHUB_ENV
+
+    - name: Run tests against local database
+    #Run only local_sql_db.test.js
+      run: npm test -- local_sql_db.test.js
