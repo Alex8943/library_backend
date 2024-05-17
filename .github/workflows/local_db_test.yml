@@ -40,7 +40,7 @@ jobs:
     - name: Start MySQL
       run: |
         sudo /etc/init.d/mysql start
-        mysql -uroot -p1234
+        mysql -utest_user -ptest_password
 
     - name: Install dependencies
       run: npm install
