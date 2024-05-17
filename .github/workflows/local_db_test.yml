@@ -37,6 +37,11 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
+    - name: Start MySQL
+      run: |
+        sudo /etc/init.d/mysql start
+        mysql -u test_user -p test_password
+
     - name: Install dependencies
       run: npm install
 
