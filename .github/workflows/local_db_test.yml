@@ -6,24 +6,24 @@ on:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     services:
       mysql:
         image: mysql:5.7
         ports:
-          - 3306:3307  # Map container's port 3306 to host's port 3307 to avoid conflicts
+          - 3306:3306
         env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_DEV_DB_PASSWORD }}
-          MYSQL_DATABASE: ${{ secrets.MYSQL_DEV_DB_NAME }}
-          MYSQL_USER: ${{ secrets.MYSQL_DEV_DB_USER }}
-          MYSQL_PASSWORD: ${{ secrets.MYSQL_DEV_DB_PASSWORD }}
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: test_db
+          MYSQL_USER: test_user
+          MYSQL_PASSWORD: test_password
         options: >-
           --health-cmd="mysqladmin ping --silent"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=3
-
     strategy:
       matrix:
         node-version: [14.x]
@@ -39,24 +39,6 @@ jobs:
 
     - name: Install dependencies
       run: npm install
-
-    - name: Wait for MySQL to be ready
-      run: |
-        for i in {1..30}; do
-          if mysqladmin ping -h127.0.0.1 -P3307 --silent; then
-            echo "MySQL is up and running"
-            break
-          fi
-          echo "Waiting for MySQL to be ready..."
-          sleep 2
-        done
-
-    - name: Debug MySQL service if it fails
-      if: failure()
-      run: |
-        MYSQL_CONTAINER_ID=$(docker ps -q --filter "ancestor=mysql:5.7")
-        echo "MySQL container ID: $MYSQL_CONTAINER_ID"
-        docker logs $MYSQL_CONTAINER_ID
 
     - name: Run tests against local database
       env:
