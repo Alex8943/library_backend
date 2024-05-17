@@ -1,5 +1,4 @@
 name: Local Test
-
 on:
   push:
     branches: [ "main" ]
@@ -13,7 +12,7 @@ jobs:
       mysql:
         image: mysql:5.7
         ports:
-          - 3306:3306
+          - 3306:3307
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: test_db
@@ -37,19 +36,14 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Start MySQL
-      run: |
-        sudo /etc/init.d/mysql start
-        mysql -e "CREATE DATABASE IF NOT EXISTS $DB_DATABASE;" -u$DB_USER -p$DB_PASSWORD
-
     - name: Install dependencies
       run: npm install
-
+    
     - name: Run tests against local database
       env:
         MYSQL_DEV_DB_NAME: ${{ secrets.MYSQL_DEV_DB_NAME }}
         MYSQL_DEV_DB_USER: ${{ secrets.MYSQL_DEV_DB_USER }}
         MYSQL_DEV_DB_PASSWORD: ${{ secrets.MYSQL_DEV_DB_PASSWORD }}
         MYSQL_DEV_DB_HOST: 127.0.0.1
-        MYSQL_DEV_DB_PORT: 3306
+        MYSQL_DEV_DB_PORT: 3307
       run: npm test -- local_sql_db.test.js
