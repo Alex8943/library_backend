@@ -12,7 +12,7 @@ jobs:
       mysql:
         image: mysql:5.7
         ports:
-          - 3306:3307
+          - 3306:3306
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: test_db
@@ -44,6 +44,6 @@ jobs:
         MYSQL_DEV_DB_NAME: ${{ secrets.MYSQL_DEV_DB_NAME }}
         MYSQL_DEV_DB_USER: ${{ secrets.MYSQL_DEV_DB_USER }}
         MYSQL_DEV_DB_PASSWORD: ${{ secrets.MYSQL_DEV_DB_PASSWORD }}
-        MYSQL_DEV_DB_HOST: 127.0.0.1
-        MYSQL_DEV_DB_PORT: 3307
+        MYSQL_DEV_DB_HOST: ${{ secrets.MYSQL_DEV_DB_HOST }}
+        MYSQL_DEV_DB_PORT: ${{ secrets.MYSQL_DEV_DB_PORT }}
       run: npm test -- local_sql_db.test.js
