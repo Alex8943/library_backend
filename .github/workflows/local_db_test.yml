@@ -46,5 +46,5 @@ jobs:
         MYSQL_DEV_DB_USER: ${{ secrets.MYSQL_DEV_DB_USER }}
         MYSQL_DEV_DB_PASSWORD: ${{ secrets.MYSQL_DEV_DB_PASSWORD }}
         MYSQL_DEV_DB_HOST: 127.0.0.1
-        MYSQL_DEV_DB_PORT: 3307
+        MYSQL_DEV_DB_PORT: 3306
       run: npm test -- local_sql_db.test.js
