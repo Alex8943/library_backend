@@ -16,41 +16,7 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Tag"
-    post:
-      summary: Create a new tag
-      tags:
-        - tags
-      description: Creates a new tag with the provided details
-      parameters:
-        - name: body
-          in: body
-          description: Tag object that needs to be added
-          required: true
-          schema:
-            $ref: "#/definitions/NewTag"
-      responses:
-        200:
-          description: Successful operation
-          schema:
-            $ref: "#/definitions/Tag"
-  /bookTag:
-    post:
-      summary: Add tag to book
-      tags:
-        - tags
-      description: Adds a tag to a book
-      parameters:
-        - name: body
-          in: body
-          description: Object containing book ID and tag ID
-          required: true
-          schema:
-            $ref: "#/definitions/BookTag"
-      responses:
-        200:
-          description: Successful operation
-          schema:
-            $ref: "#/definitions/BookTag"
+  
 definitions:
   Tag:
     type: object

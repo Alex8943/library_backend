@@ -96,6 +96,7 @@ export async function getBooksUpToFinishRange(finishRange: number) {
 router.post("/book", myCors, async (req, res) => {
     try{
         const result = await createBook(req.body);
+        console.log("Book created successfuly result: ", result);
         res.status(200).json(result);
     } catch (error) {
         logger.error("Error in creating a new book: [createBook, 1]", error);

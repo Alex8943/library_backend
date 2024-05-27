@@ -36,25 +36,7 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Book"
-  /book:
-    post:
-      summary: Create a new book
-      tags:
-        - books
-      description: Creates a new book with the provided details
-      parameters:
-        - name: body
-          in: body
-          description: Book object that needs to be added
-          required: true
-          schema:
-            $ref: "#/definitions/NewBook"
-      responses:
-        200:
-          description: Successful operation
-          schema:
-            $ref: "#/definitions/Book"
-
+  
 definitions:
   Book:
     type: object
@@ -76,13 +58,13 @@ definitions:
       author_id:
         type: integer
     required:
+      - id
       - title
+      - summary
       - author_id
   NewBook:
     type: object
     properties:
-      id:
-        type: integer
       title:
         type: string
       picture:
@@ -99,4 +81,5 @@ definitions:
         type: integer
     required:
       - title
+      - summary
       - author_id

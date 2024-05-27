@@ -101,51 +101,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FavoritedAuthor'
-    /user/{user_id}/author/{author_id}:
-    post:
-      summary: Create favorited author
-      tags:
-        - authors
-      parameters:
-        - in: path
-          name: user_id
-          required: true
-          schema:
-            type: string
-          description: User ID
-        - in: path
-          name: author_id
-          required: true
-          schema:
-            type: string
-          description: Author ID
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FavoritedAuthor'
-    delete:
-      summary: Delete favorited author
-      tags:
-        - authors
-      parameters:
-        - in: path
-          name: userid
-          required: true
-          schema:
-            type: string
-          description: User ID
-        - in: path
-          name: authorid
-          required: true
-          schema:
-            type: string
-          description: Author ID
-      responses:
-        '200':
-          description: OK
 components:
   schemas:
     Author:

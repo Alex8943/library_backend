@@ -20,7 +20,7 @@ app.use(cors());
 //cronjob test
 //job.start();
 
-/*
+
 const options = {
     definition: {
         openapi: "3.0.0",
@@ -31,16 +31,14 @@ const options = {
         },
     },
     apis: [
-        './src/routes/swagger_openAPI_routes/author_router.yaml', 
-        './src/routes/swagger_openAPI_routes/book_router.yaml', //Create book does not work
-        './src/routes/swagger_openAPI_routes/tag_router.yaml',
         './src/routes/swagger_openAPI_routes/auth_router.yaml',
-        './src/routes/swagger_openAPI_routes/user_router.yaml',
-        './src/routes/swagger_openAPI_routes/userTab_router.yaml',
+        './src/routes/swagger_openAPI_routes/author_router.yaml', 
+        './src/routes/swagger_openAPI_routes/book_router.yaml',
+        './src/routes/swagger_openAPI_routes/tag_router.yaml',
     ],
 };
 
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(options)));*/
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(options)));
 
 
 app.use(authorRouter) //Error: Delete favorite author does not work, invalid status code 1.
