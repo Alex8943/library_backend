@@ -64,13 +64,16 @@ export async function createUser(values: any) {
 
 // update user data
 router.post("/user/:id/update", async (req, res) => {
-    try{
+    try {
+        console.log("req.body: ", JSON.stringify(req.body, null, 2));
+
         const userdata = jwt.verify(req.body.authToken, "secret") as JwtPayload;
         let paramsId: number = parseInt(req.params.id);
-        if(userdata.user.user_id != paramsId) {
-            res.status(401).json("You are not authorized to update this users data");
+        if (userdata.user.user_id != paramsId) {
+            res.status(401).json("You are not authorized to update this user's data");
             return "error 401";
         }
+
         const result: any = await updateUser(paramsId, req.body.user.user, userdata.user.pass);
         let jwtUser = {
             "users_data_id": result.users_data_id,
@@ -79,8 +82,13 @@ router.post("/user/:id/update", async (req, res) => {
             "email": result.email,
             "pass": req.body.user.password,
             "snap_timestamp": result.snap_timestamp,
-        }
-        let resultWithToken = {"authToken": jwt.sign({ user: jwtUser }, "secret"), "user": result};
+        };
+
+        let resultWithToken = {
+            "authToken": jwt.sign({ user: jwtUser }, "secret"),
+            "user": result
+        };
+
         res.status(200).json(resultWithToken);
         return "customer updated";
     } catch (err) {
@@ -90,29 +98,47 @@ router.post("/user/:id/update", async (req, res) => {
     }
 });
 
+function isDatabaseError(err: any): err is { code: string } {
+    return err && typeof err === 'object' && 'code' in err;
+}
+
+
+
 export async function updateUser(id: number, values: any, tokenPassword: any) {
     const connection = await conn.getConnection();
     values.email = values.new_email ? values.new_email : values.email;
     const passwordUnhashed = values.new_password ? values.new_password : tokenPassword;
     values.password = await bcrypt.hash(passwordUnhashed, 10);
-    try {
-        await connection.query(`CALL update_user(?,?,?,?,?,?)`, [
-            values.name_id, 
-            values.UserName.first_name, 
-            values.UserName.last_name, 
-            id, 
-            values.email, 
-            values.password
-        ]);
-        connection.release();
-        const updatedUser = await getUser(values.email, passwordUnhashed);
-        return updatedUser;
-    }catch(err){
-        console.log(err)
-        connection.release();
-        return "error 500";
+
+    const maxRetries = 3;
+    let attempt = 0;
+
+    while (attempt < maxRetries) {
+        try {
+            await connection.beginTransaction();
+
+            await connection.query(`CALL update_user(?,?,?,?,?,?)`, [
+                values.name_id,
+                values.UserName.first_name,
+                values.UserName.last_name,
+                id,
+                values.email,
+                values.password
+            ]);
+
+            await connection.commit();
+            const updatedUser = await getUser(values.email, passwordUnhashed);
+            connection.release();
+            return updatedUser;
+        } catch (err) {
+            await connection.rollback();
+            console.error("Database query error: ", err);
+            connection.release();
+            throw err;
+            }
+        }
     }
-}
+
 
 // delete user
 router.post("/deleteUser/:id", async (req, res) => {
