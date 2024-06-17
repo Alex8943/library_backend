@@ -18,7 +18,7 @@ app.use(cors());
 //testDBConnection(); 
 
 //cronjob test
-//job.start();
+job.start();
 
 
 const options = {
