@@ -29,11 +29,6 @@ describe('my local mysql connection test', () => {
   });
 
 
-  afterAll(async () => {
-    if (connection && connection.end) {
-      await connection.end();
-    }
-  });
 
 
   test('should connect to local mysql database', async () => {
@@ -79,6 +74,8 @@ describe('my local mysql connection test', () => {
     });
 
     afterAll(async () => {
+      if (connection && connection.end) {
         await connection.end();
-    });
+      }
+    });  
 });
