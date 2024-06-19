@@ -65,7 +65,7 @@ export async function createUser(values: any) {
 // update user data
 router.post("/user/:id/update", async (req, res) => {
     try {
-        console.log("req.body: ", JSON.stringify(req.body, null, 2));
+    console.log("req.body: ", JSON.stringify(req.body, null, 2));
 
         const userdata = jwt.verify(req.body.authToken, "secret") as JwtPayload;
         let paramsId: number = parseInt(req.params.id);
@@ -96,12 +96,8 @@ router.post("/user/:id/update", async (req, res) => {
         res.status(500).json("Internal server error");
         return "error 500";
     }
-});
 
-function isDatabaseError(err: any): err is { code: string } {
-    return err && typeof err === 'object' && 'code' in err;
-}
-
+}); 
 
 
 export async function updateUser(id: number, values: any, tokenPassword: any) {
@@ -110,21 +106,18 @@ export async function updateUser(id: number, values: any, tokenPassword: any) {
     const passwordUnhashed = values.new_password ? values.new_password : tokenPassword;
     values.password = await bcrypt.hash(passwordUnhashed, 10);
 
-    const maxRetries = 3;
-    let attempt = 0;
+ 
+    try {
+        await connection.beginTransaction();
 
-    while (attempt < maxRetries) {
-        try {
-            await connection.beginTransaction();
-
-            await connection.query(`CALL update_user(?,?,?,?,?,?)`, [
+        await connection.query(`CALL update_user(?,?,?,?,?,?)`, [
                 values.name_id,
                 values.UserName.first_name,
                 values.UserName.last_name,
                 id,
                 values.email,
                 values.password
-            ]);
+        ]);
 
             await connection.commit();
             const updatedUser = await getUser(values.email, passwordUnhashed);
@@ -135,9 +128,8 @@ export async function updateUser(id: number, values: any, tokenPassword: any) {
             console.error("Database query error: ", err);
             connection.release();
             throw err;
-            }
         }
-    }
+}
 
 
 // delete user
